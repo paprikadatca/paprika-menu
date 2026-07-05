@@ -1,62 +1,132 @@
-// 1) Google Sheets'te File > Share > Publish to web > CSV linkini al.
-// 2) Aşağıdaki SHEET_CSV_URL içine yapıştır.
-const SHEET_CSV_URL = "";
-
-const SAMPLE_DATA = [
-  {lang:"tr", section:"Sandviçler", item:"No.1", description:"Tavuklu sandviç", price:"420", active:"TRUE", order:"1"},
-  {lang:"tr", section:"İçecekler", item:"Ayran", description:"", price:"70", active:"TRUE", order:"2"},
-  {lang:"en", section:"Sandwiches", item:"No.1", description:"Chicken sandwich", price:"420", active:"TRUE", order:"1"},
-  {lang:"en", section:"Drinks", item:"Ayran", description:"", price:"70", active:"TRUE", order:"2"}
+const menuData = [
+  {
+    lang: "tr",
+    type: "special",
+    section: "Günün Özeli",
+    item: "Ev Yapımı Köfte",
+    description: "Patates ve salata ile",
+    price: "520"
+  },
+  {
+    lang: "tr",
+    type: "item",
+    section: "Sandviçler",
+    item: "No.1",
+    description: "Tavuklu sandviç",
+    price: "420"
+  },
+  {
+    lang: "tr",
+    type: "item",
+    section: "Sandviçler",
+    item: "No.2",
+    description: "Köfteli sandviç",
+    price: "450"
+  },
+  {
+    lang: "tr",
+    type: "item",
+    section: "İçecekler",
+    item: "Ayran",
+    description: "",
+    price: "70"
+  },
+  {
+    lang: "en",
+    type: "special",
+    section: "Today's Special",
+    item: "Homemade Meatballs",
+    description: "With potatoes and salad",
+    price: "520"
+  },
+  {
+    lang: "en",
+    type: "item",
+    section: "Sandwiches",
+    item: "No.1",
+    description: "Chicken sandwich",
+    price: "420"
+  },
+  {
+    lang: "en",
+    type: "item",
+    section: "Sandwiches",
+    item: "No.2",
+    description: "Meatball sandwich",
+    price: "450"
+  },
+  {
+    lang: "en",
+    type: "item",
+    section: "Drinks",
+    item: "Ayran",
+    description: "",
+    price: "70"
+  }
 ];
 
-const landing = document.getElementById("landing");
-const menu = document.getElementById("menu");
-const menuContent = document.getElementById("menuContent");
-const back = document.getElementById("back");
+function showMenu(lang) {
+  document.getElementById("landing").classList.remove("active");
+  document.getElementById("menu").classList.add("active");
 
-function parseCSV(text){
-  const rows = text.trim().split(/\r?\n/).map(line => line.split(",").map(v => v.trim()));
-  const headers = rows.shift();
-  return rows.map(row => Object.fromEntries(headers.map((h,i)=>[h,row[i] ?? ""])));
+  document.getElementById("specialTitle").textContent =
+    lang === "tr" ? "Günün Özeli" : "Today's Special";
+
+  renderMenu(lang);
 }
 
-async function loadData(){
-  if(!SHEET_CSV_URL) return SAMPLE_DATA;
-  const res = await fetch(SHEET_CSV_URL + (SHEET_CSV_URL.includes("?") ? "&" : "?") + "t=" + Date.now(), {cache:"no-store"});
-  if(!res.ok) throw new Error("Sheet okunamadı");
-  return parseCSV(await res.text());
+function goHome() {
+  document.getElementById("menu").classList.remove("active");
+  document.getElementById("landing").classList.add("active");
 }
 
-function render(lang, data){
-  const items = data
-    .filter(x => String(x.lang).toLowerCase() === lang && String(x.active).toUpperCase() === "TRUE")
-    .sort((a,b) => Number(a.order || 0) - Number(b.order || 0));
+function renderMenu(lang) {
+  const data = menuData.filter(x => x.lang === lang);
+  const specials = data.filter(x => x.type === "special");
+  const items = data.filter(x => x.type === "item");
 
-  const grouped = items.reduce((acc, item) => {
-    (acc[item.section] ||= []).push(item);
-    return acc;
-  }, {});
+  const specialList = document.getElementById("specialList");
+  specialList.innerHTML = "";
 
-  menuContent.innerHTML = Object.entries(grouped).map(([section, items]) => `
-    <section class="section">
-      <h2>${section}</h2>
-      ${items.map(i => `
+  specials.forEach(x => {
+    specialList.innerHTML += `
+      <div class="special-item">
+        <strong>${x.item}</strong>
+        <p>${x.description}</p>
+        <div class="price">${x.price}₺</div>
+      </div>
+    `;
+  });
+
+  const grouped = {};
+
+  items.forEach(x => {
+    if (!grouped[x.section]) grouped[x.section] = [];
+    grouped[x.section].push(x);
+  });
+
+  const menuList = document.getElementById("menuList");
+  menuList.innerHTML = "";
+
+  Object.keys(grouped).forEach(section => {
+    let html = `
+      <div class="section">
+        <h3>${section}</h3>
+    `;
+
+    grouped[section].forEach(x => {
+      html += `
         <div class="item">
-          <div class="row"><div class="name">${i.item}</div><div class="price">${i.price ? i.price + "₺" : ""}</div></div>
-          ${i.description ? `<div class="desc">${i.description}</div>` : ""}
+          <div>
+            <strong>${x.item}</strong>
+            ${x.description ? `<p>${x.description}</p>` : ""}
+          </div>
+          <div class="price">${x.price}₺</div>
         </div>
-      `).join("")}
-    </section>
-  `).join("") || `<div class="error">Menü bilgisi bulunamadı.</div>`;
-}
+      `;
+    });
 
-async function openMenu(lang){
-  landing.classList.add("hidden");
-  menu.classList.remove("hidden");
-  menuContent.innerHTML = `<div class="error">Menü yükleniyor...</div>`;
-  try { render(lang, await loadData()); }
-  catch(e){ menuContent.innerHTML = `<div class="error">Menü şu an yüklenemedi.<br>Lütfen biraz sonra tekrar deneyin.</div>`; }
+    html += `</div>`;
+    menuList.innerHTML += html;
+  });
 }
-
-document.querySelectorAll("[data-lang]").forEach(btn => btn.addEventListener("click", () => openMenu(btn.dataset.lang)));
-back.addEventListener("click", () => { menu.classList.add("hidden"); landing.classList.remove("hidden"); });
