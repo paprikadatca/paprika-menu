@@ -3,39 +3,99 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Paprika Datça Menü</title>
+  <title>Paprika Food & Drink</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="app">
-    <section id="landing" class="page active">
-      <div class="brand">
-        <div class="brand-mark">PAPRIKA</div>
-        <div class="brand-sub">Datça</div>
-      </div>
+  <main class="site">
 
-      <div class="language-card">
-        <button onclick="showMenu('tr')">Türkçe Menü</button>
-        <button onclick="showMenu('en')">English Menu</button>
-      </div>
-    </section>
-
-    <section id="menu" class="page">
-      <header class="menu-header">
-        <button class="back" onclick="goHome()">←</button>
-        <div>
-          <h1 id="menuTitle">Paprika</h1>
-          <p id="menuSubtitle">Datça</p>
+    <section id="landing" class="landing page active">
+      <div class="frame">
+        <div class="logo">
+          <div class="paprika">paprika</div>
+          <div class="food">food & drink</div>
         </div>
-      </header>
 
-      <section class="specials">
-        <h2 id="specialTitle">Günün Özeli</h2>
-        <div id="specialList"></div>
-      </section>
+        <div class="welcome">
+          <div class="ornament"><span></span></div>
+          <h1>HOŞ GELDİNİZ</h1>
+          <p>Welcome</p>
+          <div class="dots"></div>
+        </div>
 
-      <section id="menuList" class="menu-list"></section>
+        <div class="select-text">
+          <h2>LÜTFEN DİL SEÇİNİZ</h2>
+          <p>PLEASE SELECT YOUR LANGUAGE</p>
+        </div>
+
+        <div class="language-grid">
+          <button onclick="openMenu('tr')">
+            <strong>TÜRKÇE</strong>
+            <span>MENÜ</span>
+            <i></i>
+          </button>
+
+          <button onclick="openMenu('en')">
+            <strong>ENGLISH</strong>
+            <span>MENU</span>
+            <i></i>
+          </button>
+        </div>
+
+        <footer class="landing-footer">
+          <div class="dots"></div>
+          <p>Paprika Food & Drink</p>
+          <em>Datça</em>
+          <div class="insta">@paprika.datca</div>
+        </footer>
+      </div>
     </section>
+
+    <section id="menuPage" class="menu-page page">
+      <div class="menu-sheet">
+
+        <button class="back" onclick="goLanding()">←</button>
+
+        <header class="menu-logo">
+          <div class="paprika">paprika</div>
+          <div class="food">food & drink</div>
+        </header>
+
+        <section class="today">
+          <h1 id="todayTitle">BUGÜN NE YİYECEĞİZ?</h1>
+          <div class="today-box" id="todayBox"></div>
+        </section>
+
+        <section class="menu-columns">
+          <div class="col">
+            <div id="mainDishes"></div>
+            <div id="appetizers"></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="col">
+            <div id="toasts"></div>
+            <div id="sandwiches"></div>
+          </div>
+        </section>
+
+        <section class="drinks-box">
+          <h2 id="drinksTitle">İÇECEKLER</h2>
+          <div class="drinks-grid">
+            <div id="drinks"></div>
+            <div class="divider small"></div>
+            <div id="alcohol"></div>
+          </div>
+        </section>
+
+        <footer class="menu-footer">
+          <span>@paprika.datca</span>
+        </footer>
+
+      </div>
+    </section>
+
   </main>
 
   <script src="app.js"></script>
