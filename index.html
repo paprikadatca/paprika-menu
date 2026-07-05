@@ -3,31 +3,41 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Paprika Datça Menu</title>
+  <title>Paprika Datça Menü</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main id="app">
-    <section class="landing" id="landing">
-      <div class="brand">Paprika</div>
-      <div class="place">Datça</div>
-      <div class="buttons">
-        <button data-lang="tr">Türkçe Menü</button>
-        <button data-lang="en">English Menu</button>
+  <main class="app">
+    <section id="landing" class="page active">
+      <div class="brand">
+        <div class="brand-mark">PAPRIKA</div>
+        <div class="brand-sub">Datça</div>
+      </div>
+
+      <div class="language-card">
+        <button onclick="showMenu('tr')">Türkçe Menü</button>
+        <button onclick="showMenu('en')">English Menu</button>
       </div>
     </section>
 
-    <section class="menu hidden" id="menu">
-      <header>
-        <button class="back" id="back">←</button>
+    <section id="menu" class="page">
+      <header class="menu-header">
+        <button class="back" onclick="goHome()">←</button>
         <div>
-          <div class="brand small">Paprika</div>
-          <div class="place small-place">Datça</div>
+          <h1 id="menuTitle">Paprika</h1>
+          <p id="menuSubtitle">Datça</p>
         </div>
       </header>
-      <div id="menuContent"></div>
+
+      <section class="specials">
+        <h2 id="specialTitle">Günün Özeli</h2>
+        <div id="specialList"></div>
+      </section>
+
+      <section id="menuList" class="menu-list"></section>
     </section>
   </main>
+
   <script src="app.js"></script>
 </body>
 </html>
