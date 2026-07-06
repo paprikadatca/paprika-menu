@@ -45,15 +45,20 @@ body{
 }
 
 .welcome{
-  margin-top:25px;
+  margin-top:20px;
   color:var(--red);
-  font-size:36px;
-  font-weight:800;
+  font-size:38px;
+  font-weight:900;
+  letter-spacing:.5px;
 }
 
 .welcome-en{
-  margin-top:6px;
-  font-size:21px;
+  margin-top:4px;
+  color:var(--green);
+  font-family:Georgia, "Times New Roman", serif;
+  font-style:italic;
+  font-size:30px;
+  line-height:1;
 }
 
 .select-text{
@@ -196,7 +201,8 @@ body{
   .page{ padding:18px 12px 40px; }
   .logo-image{ width:390px; }
   .menu-logo{ width:520px; }
-  .welcome{ font-size:33px; }
+  .welcome{ font-size:34px; }
+  .welcome-en{ font-size:28px; }
   .lang-button{ font-size:25px; }
   .category{ padding:15px 12px 13px; }
   .category h2{ font-size:23px; }
