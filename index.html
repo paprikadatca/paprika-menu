@@ -3,100 +3,52 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Paprika Food & Drink</title>
+  <title>Paprika Datça Menü</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="site">
 
-    <section id="landing" class="landing page active">
-      <div class="frame">
-        <div class="logo">
-          <div class="paprika">paprika</div>
-          <div class="food">food & drink</div>
-        </div>
+  <section id="languageScreen" class="page language-screen">
+    <div class="logo">
+      <div class="welcome">HOŞ GELDİNİZ</div>
+      <div class="welcome-en">Welcome</div>
+    </div>
 
-        <div class="welcome">
-          <div class="ornament"><span></span></div>
-          <h1>HOŞ GELDİNİZ</h1>
-          <p>Welcome</p>
-          <div class="dots"></div>
-        </div>
+    <div class="select-text">
+      LÜTFEN DİL SEÇİNİZ<br>
+      <span>PLEASE SELECT YOUR LANGUAGE</span>
+    </div>
 
-        <div class="select-text">
-          <h2>LÜTFEN DİL SEÇİNİZ</h2>
-          <p>PLEASE SELECT YOUR LANGUAGE</p>
-        </div>
+    <div class="lang-buttons">
+      <button class="lang-button" onclick="showMenu('tr')">
+        TÜRKÇE
+        <small>MENÜ</small>
+      </button>
 
-        <div class="language-grid">
-          <button onclick="openMenu('tr')">
-            <strong>TÜRKÇE</strong>
-            <span>MENÜ</span>
-            <i></i>
-          </button>
+      <button class="lang-button" onclick="showMenu('en')">
+        ENGLISH
+        <small>MENU</small>
+      </button>
+    </div>
 
-          <button onclick="openMenu('en')">
-            <strong>ENGLISH</strong>
-            <span>MENU</span>
-            <i></i>
-          </button>
-        </div>
+    <div class="footer">
+      Paprika Food &amp; Drink<br>
+      Datça<br>
+      @paprika.datca
+    </div>
+  </section>
 
-        <footer class="landing-footer">
-          <div class="dots"></div>
-          <p>Paprika Food & Drink</p>
-          <em>Datça</em>
-          <div class="insta">@paprika.datca</div>
-        </footer>
-      </div>
-    </section>
+  <section id="menuScreen" class="page hidden">
+    <header class="menu-header">
+      <div class="menu-title" id="menuTitle">MENÜ</div>
+    </header>
 
-    <section id="menuPage" class="menu-page page">
-      <div class="menu-sheet">
+    <main id="menuContent"></main>
 
-        <button class="back" onclick="goLanding()">←</button>
-
-        <header class="menu-logo">
-          <div class="paprika">paprika</div>
-          <div class="food">food & drink</div>
-        </header>
-
-        <section class="today">
-          <h1 id="todayTitle">BUGÜN NE YİYECEĞİZ?</h1>
-          <div class="today-box" id="todayBox"></div>
-        </section>
-
-        <section class="menu-columns">
-          <div class="col">
-            <div id="mainDishes"></div>
-            <div id="appetizers"></div>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="col">
-            <div id="toasts"></div>
-            <div id="sandwiches"></div>
-          </div>
-        </section>
-
-        <section class="drinks-box">
-          <h2 id="drinksTitle">İÇECEKLER</h2>
-          <div class="drinks-grid">
-            <div id="drinks"></div>
-            <div class="divider small"></div>
-            <div id="alcohol"></div>
-          </div>
-        </section>
-
-        <footer class="menu-footer">
-          <span>@paprika.datca</span>
-        </footer>
-
-      </div>
-    </section>
-
-  </main>
+    <footer class="footer">
+      @paprika.datca
+    </footer>
+  </section>
 
   <script src="app.js"></script>
 </body>
