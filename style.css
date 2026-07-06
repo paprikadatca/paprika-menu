@@ -1,431 +1,231 @@
 :root{
-  --paper:#f6efe6;
-  --ink:#171717;
-  --red:#c91f1f;
-  --teal:#064d54;
-  --soft:#eadfce;
+  --bg:#fbf3e7;
+  --card:#fffaf2;
+  --red:#c52828;
+  --green:#0d4f4c;
+  --text:#151515;
+  --line:rgba(13,79,76,.13);
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+}
 
 body{
-  background:var(--paper);
-  color:var(--ink);
-  font-family: Arial, Helvetica, sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial, Helvetica, sans-serif;
 }
 
-.page{display:none}
-.page.active{display:block}
-
-.site{
-  min-height:100vh;
-  background:var(--paper);
+.page{
+  max-width:760px;
+  margin:auto;
+  padding:18px 16px 46px;
 }
 
-/* LANDING */
+.hidden{
+  display:none;
+}
 
-.frame{
-  width:min(96vw,760px);
-  min-height:96vh;
-  margin:2vh auto;
-  border:3px solid var(--teal);
-  border-radius:24px;
-  padding:55px 42px 32px;
+.logo{
   text-align:center;
 }
 
-.logo .paprika,
-.menu-logo .paprika{
-  font-family:cursive;
-  color:#f23336;
-  font-size:90px;
-  line-height:.8;
-  font-weight:700;
-  transform:rotate(-3deg);
-}
-
-.logo .food,
-.menu-logo .food{
-  font-size:42px;
-  margin-top:8px;
-}
-
-.welcome{
-  margin-top:120px;
-}
-
-.welcome h1,
-.select-text h2,
-.menu-page h1,
-.block h2,
-.drinks-box h2{
-  color:var(--red);
-  font-weight:900;
-  letter-spacing:3px;
-  font-stretch:condensed;
-}
-
-.welcome h1{
-  font-size:44px;
-}
-
-.welcome p{
-  color:var(--teal);
-  font-family:cursive;
-  font-size:44px;
-  margin-top:8px;
-}
-
-.dots{
-  width:190px;
-  height:18px;
-  margin:28px auto;
-  position:relative;
-  border-top:1px solid var(--red);
-}
-
-.dots:before,
-.dots:after{
-  content:"";
-  position:absolute;
-  top:-6px;
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  background:var(--red);
-}
-
-.dots:before{left:70px}
-.dots:after{right:70px}
-
-.select-text{
-  margin-top:35px;
-}
-
-.select-text h2{
-  color:var(--teal);
-  font-size:34px;
-}
-
-.select-text p{
-  color:var(--red);
-  font-weight:900;
-  font-style:italic;
-  font-size:28px;
-  margin-top:8px;
-  letter-spacing:2px;
-}
-
-.language-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:36px;
-  margin-top:48px;
-}
-
-.language-grid button{
-  height:250px;
-  background:transparent;
-  border:3px solid var(--teal);
-  border-radius:14px;
-  cursor:pointer;
-  color:var(--red);
-}
-
-.language-grid strong{
+.logo-image{
+  width:470px;
+  max-width:98%;
   display:block;
-  font-size:48px;
-  letter-spacing:2px;
-}
-
-.language-grid span{
-  display:block;
-  color:var(--teal);
-  font-size:30px;
-  margin-top:18px;
-  font-weight:800;
-}
-
-.language-grid i{
-  display:block;
-  width:72%;
-  height:1px;
-  background:var(--red);
-  margin:34px auto 0;
-}
-
-.landing-footer{
-  margin-top:78px;
-  color:var(--teal);
-}
-
-.landing-footer p{
-  font-size:26px;
-}
-
-.landing-footer em{
-  display:block;
-  color:var(--red);
-  font-family:cursive;
-  font-size:34px;
-  margin-top:8px;
-}
-
-.insta{
-  margin-top:24px;
-  font-size:22px;
-  font-weight:700;
-}
-
-/* MENU PAGE */
-
-.menu-sheet{
-  width:min(96vw,900px);
-  margin:0 auto;
-  padding:18px 48px 36px;
-  position:relative;
-}
-
-.back{
-  position:fixed;
-  top:18px;
-  left:18px;
-  width:42px;
-  height:42px;
-  border:none;
-  border-radius:50%;
-  background:var(--teal);
-  color:white;
-  font-size:22px;
-  z-index:10;
+  margin:auto;
 }
 
 .menu-logo{
+  width:660px;
+  max-width:100%;
+}
+
+.language-screen{
+  min-height:100vh;
   text-align:center;
-  margin-bottom:24px;
+  padding-top:10px;
 }
 
-.menu-logo .paprika{
-  font-size:76px;
+.welcome{
+  margin-top:25px;
+  color:var(--red);
+  font-size:36px;
+  font-weight:800;
 }
 
-.menu-logo .food{
-  font-size:34px;
+.welcome-en{
+  margin-top:6px;
+  font-size:21px;
 }
 
-.today h1{
-  text-align:center;
-  font-size:42px;
-  margin:20px 0 22px;
+.select-text{
+  margin-top:32px;
+  color:var(--green);
+  font-size:22px;
+  font-weight:800;
+  line-height:1.35;
 }
 
-.today-box{
-  border:3px solid var(--teal);
-  border-radius:14px;
-  padding:28px 32px;
+.select-text span{
+  color:var(--red);
+}
+
+.lang-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:14px 50px;
-  min-height:190px;
-}
-
-.today-row,
-.menu-row{
-  display:grid;
-  grid-template-columns:1fr 90px;
-  align-items:end;
-  gap:16px;
-  margin-bottom:14px;
-}
-
-.name{
-  font-size:17px;
-  font-weight:600;
-}
-
-.desc{
-  color:var(--teal);
-  font-style:italic;
-  font-size:14px;
-  margin-top:2px;
-  line-height:1.25;
-}
-
-.price{
-  font-weight:800;
-  text-align:right;
-  white-space:nowrap;
-}
-
-.dash{
-  border-bottom:2px dotted #333;
-  min-height:1px;
-  align-self:center;
-}
-
-.menu-columns{
-  display:grid;
-  grid-template-columns:1fr 1px 1fr;
-  gap:30px;
-  margin-top:34px;
-}
-
-.divider{
-  background:var(--red);
-  width:1px;
-  opacity:.75;
-}
-
-.block{
-  margin-bottom:32px;
-}
-
-.block h2{
-  display:flex;
-  align-items:center;
   gap:18px;
-  font-size:36px;
+  margin-top:28px;
+}
+
+.lang-button{
+  min-height:118px;
+  border:2px solid var(--green);
+  border-radius:16px;
+  background:white;
+  color:var(--red);
+  font-size:29px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.lang-button small{
+  display:block;
+  margin-top:8px;
+  font-size:17px;
+}
+
+.menu-header{
+  text-align:center;
   margin-bottom:18px;
 }
 
-.block h2:after{
-  content:"";
-  height:1px;
-  background:var(--red);
-  flex:1;
+.menu-title{
+  margin-top:8px;
+  color:var(--red);
+  font-size:34px;
+  font-weight:900;
 }
 
-.menu-row{
-  border-bottom:1px dashed rgba(201,31,31,.45);
-  padding:0 0 12px;
-  margin-bottom:14px;
-}
-
-.drinks-box{
-  border:3px solid var(--teal);
-  border-radius:14px;
-  padding:26px 30px 22px;
+.category{
   margin-top:22px;
-  position:relative;
+  background:var(--card);
+  border:1px solid rgba(13,79,76,.18);
+  border-radius:18px;
+  padding:16px 16px 14px;
+  box-shadow:0 7px 18px rgba(0,0,0,.035);
 }
 
-.drinks-box h2{
-  position:absolute;
-  top:-34px;
-  left:50%;
-  transform:translateX(-50%);
-  background:var(--paper);
-  padding:0 22px;
-  font-size:32px;
+.category h2{
+  margin:0 0 12px;
+  padding-bottom:8px;
+  border-bottom:1.5px solid rgba(197,40,40,.42);
+  color:var(--red);
+  font-size:24px;
+  font-weight:900;
 }
 
-.drinks-grid{
-  display:grid;
-  grid-template-columns:1fr 1px 1fr;
-  gap:28px;
+.daily-category{
+  border:2px solid var(--red);
+  background:rgba(255,255,255,.55);
+  padding:18px 16px 16px;
 }
 
-.small{
-  min-height:160px;
-}
-
-.menu-footer{
-  margin-top:24px;
+.daily-category h2{
   text-align:center;
-  font-weight:700;
+  font-size:27px;
+  border-bottom:2px solid var(--red);
 }
 
-/* MOBILE */
+.item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:14px;
+  align-items:baseline;
+  padding:7px 0;
+  border-bottom:1px solid var(--line);
+}
 
-@media(max-width:700px){
-  .frame{
-    width:96vw;
-    padding:42px 24px 28px;
+.item:last-child{
+  border-bottom:none;
+}
+
+.item-main{
+  min-width:0;
+  line-height:1.25;
+}
+
+.item-name{
+  font-size:18px;
+  font-weight:900;
+}
+
+.item-desc-inline{
+  margin-left:18px;
+  color:var(--green);
+  font-size:14px;
+  font-style:italic;
+  white-space:normal;
+}
+
+.price{
+  text-align:right;
+  font-size:18px;
+  font-weight:900;
+  white-space:nowrap;
+  padding-left:12px;
+}
+
+.footer{
+  margin-top:42px;
+  text-align:center;
+  color:var(--green);
+  font-size:15px;
+}
+
+@media(max-width:430px){
+  .page{
+    padding:18px 12px 40px;
   }
 
-  .logo .paprika{
-    font-size:70px;
+  .logo-image{
+    width:390px;
   }
 
-  .logo .food{
-    font-size:32px;
+  .menu-logo{
+    width:520px;
   }
 
   .welcome{
-    margin-top:80px;
+    font-size:33px;
   }
 
-  .welcome h1{
-    font-size:34px;
+  .lang-button{
+    font-size:25px;
   }
 
-  .welcome p{
-    font-size:36px;
+  .category{
+    padding:15px 12px 13px;
   }
 
-  .select-text h2{
-    font-size:26px;
+  .category h2{
+    font-size:23px;
   }
 
-  .select-text p{
-    font-size:21px;
+  .item{
+    gap:8px;
   }
 
-  .language-grid{
-    gap:18px;
+  .item-name,
+  .price{
+    font-size:16px;
   }
 
-  .language-grid button{
-    height:170px;
-  }
-
-  .language-grid strong{
-    font-size:30px;
-  }
-
-  .language-grid span{
-    font-size:22px;
-  }
-
-  .menu-sheet{
-    padding:16px 18px 30px;
-  }
-
-  .menu-logo .paprika{
-    font-size:58px;
-  }
-
-  .menu-logo .food{
-    font-size:26px;
-  }
-
-  .today h1{
-    font-size:30px;
-  }
-
-  .today-box{
-    grid-template-columns:1fr;
-    padding:22px 18px;
-  }
-
-  .menu-columns{
-    grid-template-columns:1fr;
-    gap:0;
-  }
-
-  .menu-columns > .divider{
-    display:none;
-  }
-
-  .block h2{
-    font-size:30px;
-  }
-
-  .drinks-grid{
-    grid-template-columns:1fr;
-  }
-
-  .drinks-grid .divider{
-    display:none;
+  .item-desc-inline{
+    margin-left:10px;
+    font-size:12px;
   }
 }
