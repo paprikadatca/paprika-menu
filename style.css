@@ -44,25 +44,40 @@ body{
   padding-top:10px;
 }
 
-.welcome{
-  margin-top:20px;
-  color:var(--red);
-  font-size:38px;
-  font-weight:900;
-  letter-spacing:.5px;
+.welcome-block{
+  margin-top:18px;
+  text-align:center;
 }
 
-.welcome-en{
-  margin-top:4px;
-  color:var(--green);
-  font-family:Georgia, "Times New Roman", serif;
-  font-style:italic;
-  font-size:30px;
+.welcome-tr{
+  color:var(--red);
+  font-size:39px;
+  font-weight:900;
+  letter-spacing:.8px;
   line-height:1;
 }
 
+.welcome-en{
+  margin-top:8px;
+  color:var(--green);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:38px;
+  font-style:italic;
+  font-weight:700;
+  line-height:1;
+}
+
+.menu-welcome{
+  margin-top:4px;
+  color:var(--green);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:32px;
+  font-style:italic;
+  font-weight:700;
+}
+
 .select-text{
-  margin-top:32px;
+  margin-top:34px;
   color:var(--green);
   font-size:22px;
   font-weight:800;
@@ -201,8 +216,11 @@ body{
   .page{ padding:18px 12px 40px; }
   .logo-image{ width:390px; }
   .menu-logo{ width:520px; }
-  .welcome{ font-size:34px; }
-  .welcome-en{ font-size:28px; }
+
+  .welcome-tr{ font-size:34px; }
+  .welcome-en{ font-size:36px; }
+  .menu-welcome{ font-size:30px; }
+
   .lang-button{ font-size:25px; }
   .category{ padding:15px 12px 13px; }
   .category h2{ font-size:23px; }
