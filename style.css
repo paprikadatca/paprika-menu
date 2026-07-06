@@ -49,31 +49,18 @@ body{
   text-align:center;
 }
 
-.welcome-tr{
+.welcome-tr,
+.welcome-en{
   color:var(--red);
+  font-family:Arial,Helvetica,sans-serif;
   font-size:39px;
   font-weight:900;
   letter-spacing:.8px;
-  line-height:1;
+  line-height:1.05;
 }
 
 .welcome-en{
-  margin-top:8px;
-  color:var(--green);
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:38px;
-  font-style:italic;
-  font-weight:700;
-  line-height:1;
-}
-
-.menu-welcome{
-  margin-top:4px;
-  color:var(--green);
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:32px;
-  font-style:italic;
-  font-weight:700;
+  margin-top:6px;
 }
 
 .select-text{
@@ -217,9 +204,10 @@ body{
   .logo-image{ width:390px; }
   .menu-logo{ width:520px; }
 
-  .welcome-tr{ font-size:34px; }
-  .welcome-en{ font-size:36px; }
-  .menu-welcome{ font-size:30px; }
+  .welcome-tr,
+  .welcome-en{
+    font-size:34px;
+  }
 
   .lang-button{ font-size:25px; }
   .category{ padding:15px 12px 13px; }
