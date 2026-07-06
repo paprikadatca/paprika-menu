@@ -67,7 +67,6 @@ window.showMenu = function(lang) {
   document.getElementById("languageScreen").classList.add("hidden");
   document.getElementById("menuScreen").classList.remove("hidden");
   document.getElementById("menuTitle").innerText = lang === "tr" ? "MENÜ" : "MENU";
-  document.getElementById("menuWelcome").innerText = lang === "tr" ? "Hoş geldiniz" : "Welcome";
   renderMenu(lang);
 };
 
