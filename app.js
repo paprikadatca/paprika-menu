@@ -12,6 +12,7 @@ const MENU = {
   items: [
     ["daily","Günün yemeği 1","Daily special 1","","",""],
     ["daily","Günün yemeği 2","Daily special 2","","",""],
+    ["daily","Günün yemeği 3","Daily special 3","","",""],
 
     ["main","Köfte Porsiyon","Meatballs Portion","Anne köftesi, patates, soğan","Homestyle meatballs, fries, onion",""],
     ["main","Köfte Ekmek","Meatball Sandwich","Anne köftesi, domates, soğan, yeşillik","Homestyle meatballs, tomato, onion, greens",""],
@@ -66,6 +67,7 @@ window.showMenu = function(lang) {
   document.getElementById("languageScreen").classList.add("hidden");
   document.getElementById("menuScreen").classList.remove("hidden");
   document.getElementById("menuTitle").innerText = lang === "tr" ? "MENÜ" : "MENU";
+  document.getElementById("menuWelcome").innerText = lang === "tr" ? "Hoş geldiniz" : "Welcome";
   renderMenu(lang);
 };
 
