@@ -102,8 +102,14 @@ function hasValidPrice(item) {
   return hasText(item.price) && Number(item.price) > 0;
 }
 
-function shouldShow(item) {
+function shouldShowProduct(item) {
   if (!isTrue(item.active)) return false;
+  if (isExceptionProduct(item)) return true;
+  return hasValidPrice(item);
+}
+
+function shouldShowDaily(item) {
+  if (!hasText(item.tr_name) && !hasText(item.en_name)) return false;
   if (isExceptionProduct(item)) return true;
   return hasValidPrice(item);
 }
@@ -159,7 +165,7 @@ function findMatchingProduct(dailyItem) {
 
 function dailyItems() {
   return DATA.daily
-    .filter(row => isTrue(row.active))
+    .filter(row => hasText(row.tr_name) || hasText(row.en_name))
     .map(row => {
       const matched = findMatchingProduct(row);
 
@@ -167,7 +173,7 @@ function dailyItems() {
         return {
           category: "daily",
           order: row.order || matched.order,
-          active: row.active,
+          active: matched.active,
           tr_name: matched.tr_name,
           en_name: matched.en_name,
           tr_description: matched.tr_description,
@@ -179,7 +185,7 @@ function dailyItems() {
       return {
         category: "daily",
         order: row.order,
-        active: row.active,
+        active: "TRUE",
         tr_name: row.tr_name,
         en_name: row.en_name,
         tr_description: row.tr_description,
@@ -187,7 +193,7 @@ function dailyItems() {
         price: row.price
       };
     })
-    .filter(item => shouldShow(item))
+    .filter(item => shouldShowDaily(item))
     .sort((a, b) => Number(a.order || 999) - Number(b.order || 999));
 }
 
@@ -203,7 +209,7 @@ function renderMenu(lang) {
         ? dailyItems()
         : DATA.products
             .filter(item => item.category === categoryId)
-            .filter(item => shouldShow(item))
+            .filter(item => shouldShowProduct(item))
             .sort((a, b) => Number(a.order || 999) - Number(b.order || 999));
 
     if (!items.length) return;
