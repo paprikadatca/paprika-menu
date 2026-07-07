@@ -173,7 +173,7 @@ function dailyItems() {
         return {
           category: "daily",
           order: row.order || matched.order,
-          active: matched.active,
+          active: "TRUE",
           tr_name: matched.tr_name,
           en_name: matched.en_name,
           tr_description: matched.tr_description,
