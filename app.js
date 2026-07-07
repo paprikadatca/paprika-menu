@@ -10,7 +10,7 @@ const CATEGORIES = [
   ["alcohol", "ALKOLLÜ İÇECEKLER", "ALCOHOLIC DRINKS"]
 ];
 
-let MENU = {
+let DATA = {
   settings: { currency: "₺" },
   products: [],
   daily: []
@@ -21,17 +21,20 @@ function sheetUrl(sheetName) {
 }
 
 async function loadSheet(sheetName) {
-  const res = await fetch(sheetUrl(sheetName));
-  const text = await res.text();
-  return csvToObjects(text);
+  const response = await fetch(sheetUrl(sheetName));
+  const csv = await response.text();
+  return csvToObjects(csv);
 }
 
 function csvToObjects(csv) {
   const rows = parseCSV(csv);
   const headers = rows.shift().map(h => h.trim());
+
   return rows.map(row => {
     const obj = {};
-    headers.forEach((h, i) => obj[h] = row[i] ? row[i].trim() : "");
+    headers.forEach((header, index) => {
+      obj[header] = row[index] ? row[index].trim() : "";
+    });
     return obj;
   });
 }
@@ -40,21 +43,21 @@ function parseCSV(text) {
   const rows = [];
   let row = [];
   let cell = "";
-  let insideQuotes = false;
+  let quoted = false;
 
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
     const next = text[i + 1];
 
-    if (char === '"' && insideQuotes && next === '"') {
+    if (char === '"' && quoted && next === '"') {
       cell += '"';
       i++;
     } else if (char === '"') {
-      insideQuotes = !insideQuotes;
-    } else if (char === "," && !insideQuotes) {
+      quoted = !quoted;
+    } else if (char === "," && !quoted) {
       row.push(cell);
       cell = "";
-    } else if ((char === "\n" || char === "\r") && !insideQuotes) {
+    } else if ((char === "\n" || char === "\r") && !quoted) {
       if (cell || row.length) {
         row.push(cell);
         rows.push(row);
@@ -95,52 +98,51 @@ function isExceptionProduct(item) {
   return name === "şarap" || name === "rakı";
 }
 
-function shouldShowProduct(item) {
-  if (!isTrue(item.active)) return false;
-  if (isExceptionProduct(item)) return true;
+function hasValidPrice(item) {
   return hasText(item.price) && Number(item.price) > 0;
 }
 
-function formatPrice(item) {
-  if (isExceptionProduct(item) && !hasText(item.price)) {
-    return "";
-  }
-
-  return hasText(item.price) && Number(item.price) > 0
-    ? `${item.price} ${MENU.settings.currency || "₺"}`
-    : "";
+function shouldShow(item) {
+  if (!isTrue(item.active)) return false;
+  if (isExceptionProduct(item)) return true;
+  return hasValidPrice(item);
 }
 
-async function initMenu() {
-  try {
-    const [products, daily, settings] = await Promise.all([
-      loadSheet("Products"),
-      loadSheet("Daily"),
-      loadSheet("Settings")
-    ]);
+function priceText(item) {
+  if (!hasValidPrice(item)) return "";
+  return `${item.price} ${DATA.settings.currency || "₺"}`;
+}
 
-    MENU.products = products;
-    MENU.daily = daily;
+async function loadData() {
+  const [products, daily, settings] = await Promise.all([
+    loadSheet("Products"),
+    loadSheet("Daily"),
+    loadSheet("Settings")
+  ]);
 
-    settings.forEach(row => {
-      if (row.key) MENU.settings[row.key] = row.value;
-    });
-  } catch (err) {
-    alert("Menü verisi Google Sheets'ten yüklenemedi. Paylaşım ayarını kontrol et.");
-    console.error(err);
-  }
+  DATA.products = products;
+  DATA.daily = daily;
+
+  settings.forEach(row => {
+    if (hasText(row.key)) DATA.settings[row.key] = row.value;
+  });
 }
 
 window.showMenu = async function(lang) {
-  if (MENU.products.length === 0) {
-    await initMenu();
+  try {
+    if (DATA.products.length === 0) {
+      await loadData();
+    }
+
+    document.getElementById("languageScreen").classList.add("hidden");
+    document.getElementById("menuScreen").classList.remove("hidden");
+    document.getElementById("menuTitle").innerText = lang === "tr" ? "MENÜ" : "MENU";
+
+    renderMenu(lang);
+  } catch (error) {
+    console.error(error);
+    alert("Menü verisi yüklenemedi. Google Sheets paylaşım ayarını kontrol et.");
   }
-
-  document.getElementById("languageScreen").classList.add("hidden");
-  document.getElementById("menuScreen").classList.remove("hidden");
-  document.getElementById("menuTitle").innerText = lang === "tr" ? "MENÜ" : "MENU";
-
-  renderMenu(lang);
 };
 
 window.goBack = function() {
@@ -148,24 +150,24 @@ window.goBack = function() {
   document.getElementById("languageScreen").classList.remove("hidden");
 };
 
-function findProductByDailyRow(dailyRow) {
-  const dailyName = normalize(dailyRow.tr_name);
+function findMatchingProduct(dailyItem) {
+  const dailyName = normalize(dailyItem.tr_name);
   if (!dailyName) return null;
 
-  return MENU.products.find(product => normalize(product.tr_name) === dailyName);
+  return DATA.products.find(product => normalize(product.tr_name) === dailyName);
 }
 
-function getDailyItems() {
-  return MENU.daily
+function dailyItems() {
+  return DATA.daily
     .filter(row => isTrue(row.active))
     .map(row => {
-      const matched = findProductByDailyRow(row);
+      const matched = findMatchingProduct(row);
 
       if (matched) {
         return {
           category: "daily",
           order: row.order || matched.order,
-          active: "TRUE",
+          active: row.active,
           tr_name: matched.tr_name,
           en_name: matched.en_name,
           tr_description: matched.tr_description,
@@ -185,7 +187,7 @@ function getDailyItems() {
         price: row.price
       };
     })
-    .filter(item => shouldShowProduct(item))
+    .filter(item => shouldShow(item))
     .sort((a, b) => Number(a.order || 999) - Number(b.order || 999));
 }
 
@@ -196,16 +198,13 @@ function renderMenu(lang) {
   CATEGORIES.forEach(category => {
     const [categoryId, trTitle, enTitle] = category;
 
-    let items;
-
-    if (categoryId === "daily") {
-      items = getDailyItems();
-    } else {
-      items = MENU.products
-        .filter(item => item.category === categoryId)
-        .filter(item => shouldShowProduct(item))
-        .sort((a, b) => Number(a.order || 999) - Number(b.order || 999));
-    }
+    const items =
+      categoryId === "daily"
+        ? dailyItems()
+        : DATA.products
+            .filter(item => item.category === categoryId)
+            .filter(item => shouldShow(item))
+            .sort((a, b) => Number(a.order || 999) - Number(b.order || 999));
 
     if (!items.length) return;
 
@@ -213,14 +212,13 @@ function renderMenu(lang) {
     section.className = "category";
     if (categoryId === "daily") section.classList.add("daily-category");
 
-    const h2 = document.createElement("h2");
-    h2.textContent = lang === "tr" ? trTitle : enTitle;
-    section.appendChild(h2);
+    const title = document.createElement("h2");
+    title.textContent = lang === "tr" ? trTitle : enTitle;
+    section.appendChild(title);
 
     items.forEach(item => {
-      const name = lang === "tr" ? item.tr_name : (item.en_name || item.tr_name);
+      const name = lang === "tr" ? item.tr_name : item.en_name || item.tr_name;
       const desc = lang === "tr" ? item.tr_description : item.en_description;
-      const price = formatPrice(item);
 
       const row = document.createElement("div");
       row.className = "item";
@@ -230,7 +228,7 @@ function renderMenu(lang) {
           ${hasText(name) ? `<span class="item-name">${name}</span>` : ""}
           ${hasText(desc) ? `<span class="item-desc-inline">${desc}</span>` : ""}
         </div>
-        <div class="price">${price}</div>
+        <div class="price">${priceText(item)}</div>
       `;
 
       section.appendChild(row);
