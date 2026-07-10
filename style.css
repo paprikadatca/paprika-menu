@@ -297,18 +297,21 @@ button{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:12px;
-  font-size:16px;
+  gap:22px;
+  margin-top:48px;
+  color:var(--red);
+  font-size:17px;
   line-height:1.4;
 }
 
 .footer-link{
-  display:inline-flex;
+  display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:10px;
+  gap:9px;
 
-  color:inherit;
+  color:var(--red);
   text-decoration:none;
   font-weight:600;
 
@@ -318,7 +321,7 @@ button{
 }
 
 .footer-link:hover{
-  opacity:.75;
+  opacity:.78;
   transform:translateY(-1px);
 }
 
@@ -327,11 +330,8 @@ button{
 }
 
 .footer-link i{
-  width:22px;
-  flex:0 0 22px;
-  font-size:22px;
+  font-size:29px;
   line-height:1;
-  text-align:center;
 }
 
 /* TELEFON */
@@ -402,17 +402,16 @@ button{
   }
 
   .menu-footer{
-    gap:11px;
-    font-size:15px;
+    gap:20px;
+    margin-top:44px;
+    font-size:16px;
   }
 
   .footer-link{
-    gap:9px;
+    gap:8px;
   }
 
   .footer-link i{
-    width:21px;
-    flex-basis:21px;
-    font-size:21px;
+    font-size:27px;
   }
 }
