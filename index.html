@@ -8,15 +8,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <section id="languageScreen" class="page language-screen">
     <div class="logo">
-      <img src="paprika_logo_transparent.png" alt="Paprika Food & Drink" class="logo-image">
+      <img
+        src="paprika_logo_transparent.png"
+        alt="Paprika Food & Drink"
+        class="logo-image"
+      >
     </div>
 
     <div class="welcome-block">
@@ -30,12 +38,12 @@
     </div>
 
     <div class="lang-buttons">
-      <button class="lang-button" onclick="showMenu('tr')">
+      <button class="lang-button" type="button" onclick="showMenu('tr')">
         TÜRKÇE
         <small>MENÜ</small>
       </button>
 
-      <button class="lang-button" onclick="showMenu('en')">
+      <button class="lang-button" type="button" onclick="showMenu('en')">
         ENGLISH
         <small>MENU</small>
       </button>
@@ -49,10 +57,22 @@
   </section>
 
   <section id="menuScreen" class="page hidden">
-    <button class="back-button" onclick="goBack()">←</button>
+    <button
+      class="back-button"
+      type="button"
+      aria-label="Dil seçimine dön"
+      onclick="goBack()"
+    >
+      ←
+    </button>
 
     <header class="menu-header">
-      <img src="paprika_logo_transparent.png" alt="Paprika Food & Drink" class="logo-image menu-logo">
+      <img
+        src="paprika_logo_transparent.png"
+        alt="Paprika Food & Drink"
+        class="logo-image menu-logo"
+      >
+
       <div class="menu-title" id="menuTitle">MENÜ</div>
     </header>
 
