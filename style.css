@@ -7,13 +7,15 @@
   --line:rgba(13,79,76,.13);
 }
 
-*{ box-sizing:border-box; }
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:'IBM Plex Sans',sans-serif;
 }
 
 .page{
@@ -22,9 +24,13 @@ body{
   padding:18px 16px 46px;
 }
 
-.hidden{ display:none; }
+.hidden{
+  display:none;
+}
 
-.logo{ text-align:center; }
+.logo{
+  text-align:center;
+}
 
 .logo-image{
   width:470px;
@@ -52,9 +58,9 @@ body{
 .welcome-tr,
 .welcome-en{
   color:var(--red);
-  font-family:Arial,Helvetica,sans-serif;
-  font-size:39px;
-  font-weight:900;
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;
+  font-weight:700;
   letter-spacing:.8px;
   line-height:1.05;
 }
@@ -66,12 +72,15 @@ body{
 .select-text{
   margin-top:34px;
   color:var(--green);
+  font-family:'IBM Plex Sans',sans-serif;
   font-size:22px;
-  font-weight:800;
+  font-weight:600;
   line-height:1.35;
 }
 
-.select-text span{ color:var(--red); }
+.select-text span{
+  color:var(--red);
+}
 
 .lang-buttons{
   display:grid;
@@ -86,8 +95,9 @@ body{
   border-radius:16px;
   background:white;
   color:var(--red);
-  font-size:29px;
-  font-weight:800;
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:28px;
+  font-weight:600;
   cursor:pointer;
 }
 
@@ -95,6 +105,7 @@ body{
   display:block;
   margin-top:8px;
   font-size:17px;
+  font-weight:500;
 }
 
 .back-button{
@@ -107,8 +118,9 @@ body{
   border-radius:50%;
   background:var(--green);
   color:white;
+  font-family:'IBM Plex Sans',sans-serif;
   font-size:24px;
-  font-weight:900;
+  font-weight:600;
   cursor:pointer;
   z-index:20;
 }
@@ -121,8 +133,10 @@ body{
 .menu-title{
   margin-top:8px;
   color:var(--red);
-  font-size:34px;
-  font-weight:900;
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;
+  font-weight:700;
+  letter-spacing:.5px;
 }
 
 .category{
@@ -139,8 +153,10 @@ body{
   padding-bottom:8px;
   border-bottom:1.5px solid rgba(197,40,40,.42);
   color:var(--red);
-  font-size:24px;
-  font-weight:900;
+  font-family:'Cormorant Garamond',serif;
+  font-size:31px;
+  font-weight:600;
+  letter-spacing:.3px;
 }
 
 .daily-category{
@@ -151,7 +167,7 @@ body{
 
 .daily-category h2{
   text-align:center;
-  font-size:27px;
+  font-size:34px;
   border-bottom:2px solid var(--red);
 }
 
@@ -164,7 +180,9 @@ body{
   border-bottom:1px solid var(--line);
 }
 
-.item:last-child{ border-bottom:none; }
+.item:last-child{
+  border-bottom:none;
+}
 
 .item-main{
   min-width:0;
@@ -172,22 +190,26 @@ body{
 }
 
 .item-name{
+  font-family:'IBM Plex Sans',sans-serif;
   font-size:18px;
-  font-weight:900;
+  font-weight:500;
 }
 
 .item-desc-inline{
   margin-left:18px;
   color:var(--green);
+  font-family:'IBM Plex Sans',sans-serif;
   font-size:14px;
+  font-weight:400;
   font-style:italic;
   white-space:normal;
 }
 
 .price{
   text-align:right;
+  font-family:'IBM Plex Sans',sans-serif;
   font-size:18px;
-  font-weight:900;
+  font-weight:500;
   white-space:nowrap;
   padding-left:12px;
 }
@@ -196,25 +218,58 @@ body{
   margin-top:42px;
   text-align:center;
   color:var(--green);
+  font-family:'IBM Plex Sans',sans-serif;
   font-size:15px;
+  font-weight:400;
 }
 
 @media(max-width:430px){
-  .page{ padding:18px 12px 40px; }
-  .logo-image{ width:390px; }
-  .menu-logo{ width:520px; }
+  .page{
+    padding:18px 12px 40px;
+  }
+
+  .logo-image{
+    width:390px;
+  }
+
+  .menu-logo{
+    width:520px;
+  }
 
   .welcome-tr,
   .welcome-en{
-    font-size:34px;
+    font-size:36px;
   }
 
-  .lang-button{ font-size:25px; }
-  .category{ padding:15px 12px 13px; }
-  .category h2{ font-size:23px; }
-  .item{ gap:8px; }
+  .select-text{
+    font-size:20px;
+  }
+
+  .lang-button{
+    font-size:25px;
+  }
+
+  .category{
+    padding:15px 12px 13px;
+  }
+
+  .category h2{
+    font-size:28px;
+  }
+
+  .daily-category h2{
+    font-size:31px;
+  }
+
+  .item{
+    gap:8px;
+  }
+
   .item-name,
-  .price{ font-size:16px; }
+  .price{
+    font-size:16px;
+  }
+
   .item-desc-inline{
     margin-left:10px;
     font-size:12px;
