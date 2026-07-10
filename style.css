@@ -291,6 +291,49 @@ button{
   text-align:center;
 }
 
+/* MENÜ İLETİŞİM ALANI */
+
+.menu-footer{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  font-size:16px;
+  line-height:1.4;
+}
+
+.footer-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  color:inherit;
+  text-decoration:none;
+  font-weight:600;
+
+  transition:
+    opacity .15s ease,
+    transform .15s ease;
+}
+
+.footer-link:hover{
+  opacity:.75;
+  transform:translateY(-1px);
+}
+
+.footer-link:active{
+  transform:translateY(0);
+}
+
+.footer-link i{
+  width:22px;
+  flex:0 0 22px;
+  font-size:22px;
+  line-height:1;
+  text-align:center;
+}
+
 /* TELEFON */
 
 @media(max-width:430px){
@@ -356,5 +399,20 @@ button{
   .item-desc-inline{
     margin-left:9px;
     font-size:11px;
+  }
+
+  .menu-footer{
+    gap:11px;
+    font-size:15px;
+  }
+
+  .footer-link{
+    gap:9px;
+  }
+
+  .footer-link i{
+    width:21px;
+    flex-basis:21px;
+    font-size:21px;
   }
 }
