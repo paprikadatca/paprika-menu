@@ -32,9 +32,11 @@ function csvToObjects(csv) {
 
   return rows.map(row => {
     const obj = {};
+
     headers.forEach((header, index) => {
       obj[header] = row[index] ? row[index].trim() : "";
     });
+
     return obj;
   });
 }
@@ -64,7 +66,10 @@ function parseCSV(text) {
         row = [];
         cell = "";
       }
-      if (char === "\r" && next === "\n") i++;
+
+      if (char === "\r" && next === "\n") {
+        i++;
+      }
     } else {
       cell += char;
     }
@@ -79,7 +84,9 @@ function parseCSV(text) {
 }
 
 function hasText(value) {
-  return value !== null && value !== undefined && String(value).trim() !== "";
+  return value !== null &&
+    value !== undefined &&
+    String(value).trim() !== "";
 }
 
 function isTrue(value) {
@@ -105,17 +112,27 @@ function hasValidPrice(item) {
 function shouldShowProduct(item) {
   if (!isTrue(item.active)) return false;
   if (isExceptionProduct(item)) return true;
+
   return hasValidPrice(item);
 }
 
 function shouldShowDaily(item) {
-  if (!hasText(item.tr_name) && !hasText(item.en_name)) return false;
-  if (isExceptionProduct(item)) return true;
+  if (!hasText(item.tr_name) && !hasText(item.en_name)) {
+    return false;
+  }
+
+  if (isExceptionProduct(item)) {
+    return true;
+  }
+
   return hasValidPrice(item);
 }
 
 function priceText(item) {
-  if (!hasValidPrice(item)) return "";
+  if (!hasValidPrice(item)) {
+    return "";
+  }
+
   return `${item.price} ${DATA.settings.currency || "₺"}`;
 }
 
@@ -130,7 +147,9 @@ async function loadData() {
   DATA.daily = daily;
 
   settings.forEach(row => {
-    if (hasText(row.key)) DATA.settings[row.key] = row.value;
+    if (hasText(row.key)) {
+      DATA.settings[row.key] = row.value;
+    }
   });
 }
 
@@ -140,39 +159,67 @@ window.showMenu = async function(lang) {
       await loadData();
     }
 
-    document.getElementById("languageScreen").classList.add("hidden");
-    document.getElementById("menuScreen").classList.remove("hidden");
-    document.getElementById("menuTitle").innerText = lang === "tr" ? "MENÜ" : "MENU";
+    document
+      .getElementById("languageScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("menuScreen")
+      .classList.remove("hidden");
+
+    document.getElementById("menuTitle").innerText =
+      lang === "tr" ? "MENÜ" : "MENU";
 
     renderMenu(lang);
   } catch (error) {
     console.error(error);
-    alert("Menü verisi yüklenemedi. Google Sheets paylaşım ayarını kontrol et.");
+
+    alert(
+      "Menü verisi yüklenemedi. Google Sheets paylaşım ayarını kontrol et."
+    );
   }
 };
 
 window.goBack = function() {
-  document.getElementById("menuScreen").classList.add("hidden");
-  document.getElementById("languageScreen").classList.remove("hidden");
+  document
+    .getElementById("menuScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("languageScreen")
+    .classList.remove("hidden");
 };
 
 function findMatchingProduct(dailyItem) {
   const dailyName = normalize(dailyItem.tr_name);
-  if (!dailyName) return null;
 
-  return DATA.products.find(product => normalize(product.tr_name) === dailyName);
+  if (!dailyName) {
+    return null;
+  }
+
+  return DATA.products.find(
+    product => normalize(product.tr_name) === dailyName
+  );
 }
 
 function dailyItems() {
   return DATA.daily
+    .map((row, index) => ({
+      ...row,
+      sheetOrder: index + 1
+    }))
     .filter(row => hasText(row.tr_name) || hasText(row.en_name))
     .map(row => {
       const matched = findMatchingProduct(row);
 
+      const dailyOrder = hasText(row.order)
+        ? Number(row.order)
+        : row.sheetOrder;
+
       if (matched) {
         return {
           category: "daily",
-          order: row.order || matched.order,
+          order: dailyOrder,
           active: "TRUE",
           tr_name: matched.tr_name,
           en_name: matched.en_name,
@@ -184,7 +231,7 @@ function dailyItems() {
 
       return {
         category: "daily",
-        order: row.order,
+        order: dailyOrder,
         active: "TRUE",
         tr_name: row.tr_name,
         en_name: row.en_name,
@@ -194,7 +241,7 @@ function dailyItems() {
       };
     })
     .filter(item => shouldShowDaily(item))
-    .sort((a, b) => Number(a.order || 999) - Number(b.order || 999));
+    .sort((a, b) => Number(a.order) - Number(b.order));
 }
 
 function renderMenu(lang) {
@@ -210,30 +257,56 @@ function renderMenu(lang) {
         : DATA.products
             .filter(item => item.category === categoryId)
             .filter(item => shouldShowProduct(item))
-            .sort((a, b) => Number(a.order || 999) - Number(b.order || 999));
+            .sort(
+              (a, b) =>
+                Number(a.order || 999) -
+                Number(b.order || 999)
+            );
 
-    if (!items.length) return;
+    if (!items.length) {
+      return;
+    }
 
     const section = document.createElement("section");
     section.className = "category";
-    if (categoryId === "daily") section.classList.add("daily-category");
+
+    if (categoryId === "daily") {
+      section.classList.add("daily-category");
+    }
 
     const title = document.createElement("h2");
     title.textContent = lang === "tr" ? trTitle : enTitle;
     section.appendChild(title);
 
     items.forEach(item => {
-      const name = lang === "tr" ? item.tr_name : item.en_name || item.tr_name;
-      const desc = lang === "tr" ? item.tr_description : item.en_description;
+      const name =
+        lang === "tr"
+          ? item.tr_name
+          : item.en_name || item.tr_name;
+
+      const desc =
+        lang === "tr"
+          ? item.tr_description
+          : item.en_description;
 
       const row = document.createElement("div");
       row.className = "item";
 
       row.innerHTML = `
         <div class="item-main">
-          ${hasText(name) ? `<span class="item-name">${name}</span>` : ""}
-          ${hasText(desc) ? `<span class="item-desc-inline">${desc}</span>` : ""}
+          ${
+            hasText(name)
+              ? `<span class="item-name">${name}</span>`
+              : ""
+          }
+
+          ${
+            hasText(desc)
+              ? `<span class="item-desc-inline">${desc}</span>`
+              : ""
+          }
         </div>
+
         <div class="price">${priceText(item)}</div>
       `;
 
